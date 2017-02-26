@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
+    
+    let url = "https://api.weather.gov/points/39.0693,-94.6716/forecast"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        Alamofire.request(self.url).responseJSON { response in
+            print(response.request)  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
+            
+            if let JSON = response.result.value {
+                print("JSON: \(JSON)")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
