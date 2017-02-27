@@ -46,7 +46,7 @@ class simpleweatherTests: XCTestCase {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                //print(json)
+                print(json)
                 print(json["properties"]["periods"])
                 let periods = json["properties"]["periods"]
                 print("Looping: \(periods[0])")
@@ -68,3 +68,5 @@ class simpleweatherTests: XCTestCase {
     }
     
 }
+
+

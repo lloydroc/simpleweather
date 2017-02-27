@@ -10,8 +10,9 @@
 		72E4D96C370858A3A7FA047A /* Pods_simpleweatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922E62E1FB822CD1B2E0AAC9 /* Pods_simpleweatherTests.framework */; };
 		892EF3472068778CD62094AE /* Pods_simpleweather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814233A182452E1DB67F2197 /* Pods_simpleweather.framework */; };
 		8B9AA16A3C18C3EBBC53C085 /* Pods_simpleweatherUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BD5D8AFD2352E3999FF3AB /* Pods_simpleweatherUITests.framework */; };
+		DFD8EF411E639AEB0094A5AD /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8EF401E639AEB0094A5AD /* TableViewCell.swift */; };
+		DFF969EC1E6389230046EEF5 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF969EB1E6389230046EEF5 /* TableViewController.swift */; };
 		DFFF26C01E629D5A00A5B2F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF26BF1E629D5A00A5B2F1 /* AppDelegate.swift */; };
-		DFFF26C21E629D5A00A5B2F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF26C11E629D5A00A5B2F1 /* ViewController.swift */; };
 		DFFF26C51E629D5A00A5B2F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFFF26C31E629D5A00A5B2F1 /* Main.storyboard */; };
 		DFFF26C81E629D5A00A5B2F1 /* simpleweather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DFFF26C61E629D5A00A5B2F1 /* simpleweather.xcdatamodeld */; };
 		DFFF26CA1E629D5A00A5B2F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFFF26C91E629D5A00A5B2F1 /* Assets.xcassets */; };
@@ -47,9 +48,10 @@
 		814233A182452E1DB67F2197 /* Pods_simpleweather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simpleweather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		922E62E1FB822CD1B2E0AAC9 /* Pods_simpleweatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simpleweatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FAA1013F97FB7193E605E7 /* Pods-simpleweatherUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simpleweatherUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-simpleweatherUITests/Pods-simpleweatherUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DFD8EF401E639AEB0094A5AD /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		DFF969EB1E6389230046EEF5 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		DFFF26BC1E629D5A00A5B2F1 /* simpleweather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simpleweather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFFF26BF1E629D5A00A5B2F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DFFF26C11E629D5A00A5B2F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DFFF26C41E629D5A00A5B2F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DFFF26C71E629D5A00A5B2F1 /* simpleweather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = simpleweather.xcdatamodel; sourceTree = "<group>"; };
 		DFFF26C91E629D5A00A5B2F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -139,8 +141,9 @@
 		DFFF26BE1E629D5A00A5B2F1 /* simpleweather */ = {
 			isa = PBXGroup;
 			children = (
+				DFD8EF401E639AEB0094A5AD /* TableViewCell.swift */,
+				DFF969EB1E6389230046EEF5 /* TableViewController.swift */,
 				DFFF26BF1E629D5A00A5B2F1 /* AppDelegate.swift */,
-				DFFF26C11E629D5A00A5B2F1 /* ViewController.swift */,
 				DFFF26C31E629D5A00A5B2F1 /* Main.storyboard */,
 				DFFF26C91E629D5A00A5B2F1 /* Assets.xcassets */,
 				DFFF26CB1E629D5A00A5B2F1 /* LaunchScreen.storyboard */,
@@ -245,7 +248,7 @@
 				TargetAttributes = {
 					DFFF26BB1E629D5A00A5B2F1 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = E4JKFLKLE3;
+						DevelopmentTeam = ZCYN7HY447;
 						ProvisioningStyle = Automatic;
 					};
 					DFFF26D21E629D5B00A5B2F1 = {
@@ -452,9 +455,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFFF26C21E629D5A00A5B2F1 /* ViewController.swift in Sources */,
 				DFFF26C81E629D5A00A5B2F1 /* simpleweather.xcdatamodeld in Sources */,
+				DFD8EF411E639AEB0094A5AD /* TableViewCell.swift in Sources */,
 				DFFF26C01E629D5A00A5B2F1 /* AppDelegate.swift in Sources */,
+				DFF969EC1E6389230046EEF5 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,7 +611,7 @@
 			baseConfigurationReference = 4008884B26ECB1FF6A1F092D /* Pods-simpleweather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = E4JKFLKLE3;
+				DEVELOPMENT_TEAM = ZCYN7HY447;
 				INFOPLIST_FILE = simpleweather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.closeout.simpleweather;
@@ -621,7 +625,7 @@
 			baseConfigurationReference = 772D7A45D8E10703498F7DE1 /* Pods-simpleweather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = E4JKFLKLE3;
+				DEVELOPMENT_TEAM = ZCYN7HY447;
 				INFOPLIST_FILE = simpleweather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.closeout.simpleweather;
@@ -711,6 +715,7 @@
 				DFFF26E91E629D5B00A5B2F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFFF26EA1E629D5B00A5B2F1 /* Build configuration list for PBXNativeTarget "simpleweatherTests" */ = {
 			isa = XCConfigurationList;
@@ -719,6 +724,7 @@
 				DFFF26EC1E629D5B00A5B2F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFFF26ED1E629D5B00A5B2F1 /* Build configuration list for PBXNativeTarget "simpleweatherUITests" */ = {
 			isa = XCConfigurationList;
@@ -727,6 +733,7 @@
 				DFFF26EF1E629D5B00A5B2F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
