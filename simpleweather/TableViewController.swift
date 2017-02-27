@@ -11,64 +11,76 @@ import Alamofire
 import SwiftyJSON
 import CoreLocation
 
-class TableViewController: UITableViewController, CLLocationManagerDelegate {
+class TableViewController: UITableViewController {
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var locManager: CLLocationManager?
 
     let urlFront = "https://api.weather.gov/points/"
     let urlBack  = "/forecast"
     var url = ""
-    var locManager = CLLocationManager()
+    
     var periods:JSON = JSON.null
+    
+    var favRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.locManager = self.appDelegate.locManager
+        self.refreshControl = self.favRefreshControl
+        self.refreshControl?.addTarget(self, action: #selector(TableViewController.displayWeatherOnTableView), for: .valueChanged)
+        displayWeatherOnTableView()
         
-        self.locManager.delegate = self;
-        self.locManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            self.locManager.startUpdatingLocation()
-        
-            var latitude = 39.950859769264014
-            var longitude = -105.03283499303978
-            
-            if let latestLat = locManager.location?.coordinate.latitude {
-                latitude = latestLat
-            }
-            
-            
-            if let latestLong = locManager.location?.coordinate.longitude {
-                longitude = latestLong
-            }
-            
-            self.url = "\(urlFront)\(latitude),\(longitude)\(urlBack)"
-            
-            print("Url is: \(url)")
-            
-            Alamofire.request(self.url).responseJSON { response in
-                //print(response.request!)  // original URL request
-                //print(response.response!) // HTTP URL response
-                
-                switch response.result {
-                case .success(let value):
-                    let json = JSON(value)
-                    //print(json)
-                    print(json["properties"]["periods"])
-                    self.periods = json["properties"]["periods"]
-                    print("Looping: \(self.periods[0])")
-                    for (index,period):(String, JSON) in self.periods {
-                        print(index)
-                        print(period["name"].string!)
-                        print(period["shortForecast"].string!)
-                        print(period["detailedForecast"].string!)
-                        print(period["temperature"].int!)
-                        print("Wind \(period["windDirection"].string!)\(period["windSpeed"].string!)")
-                    }
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
-            }
+    }
+    
+    func displayWeatherOnTableView() {
+        guard CLLocationManager.locationServicesEnabled() else {
+            return
         }
-
+        
+        self.refreshControl?.beginRefreshing()
+        
+        var latitude = 39.950859769264014
+        var longitude = -105.03283499303978
+        
+        if let latestLat = locManager?.location?.coordinate.latitude {
+            latitude = latestLat
+        }
+        
+        
+        if let latestLong = locManager?.location?.coordinate.longitude {
+            longitude = latestLong
+        }
+        
+        self.url = "\(urlFront)\(latitude),\(longitude)\(urlBack)"
+        
+        print("Url is: \(url)")
+        
+        Alamofire.request(self.url).responseJSON { response in
+            //print(response.request!)  // original URL request
+            //print(response.response!) // HTTP URL response
+            
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                //print(json)
+                print(json["properties"]["periods"])
+                self.periods = json["properties"]["periods"]
+                print("Looping: \(self.periods[0])")
+                for (index,period):(String, JSON) in self.periods {
+                    print(index)
+                    print(period["name"].string!)
+                    print(period["shortForecast"].string!)
+                    print(period["detailedForecast"].string!)
+                    print(period["temperature"].int!)
+                    print("Wind \(period["windDirection"].string!)\(period["windSpeed"].string!)")
+                }
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+            self.refreshControl?.endRefreshing()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,32 +117,6 @@ class TableViewController: UITableViewController, CLLocationManagerDelegate {
         return cell
     }
     
-    private func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print("didChangeAuthorizationStatus")
-        
-        switch status {
-        case .notDetermined:
-            print(".NotDetermined")
-            break
-            
-        case .authorizedAlways:
-            print(".AuthorizedAlways")
-            break
-            
-        case .authorizedWhenInUse:
-            print(".AuthorizedWhenInUse")
-            break
-            
-        case .denied:
-            print(".Denied")
-            break
-            
-        default:
-            print("Unhandled authorization status")
-            break
-        }
-    }
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
