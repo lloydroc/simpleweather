@@ -17,12 +17,20 @@ class TableViewController: UITableViewController {
     var locManager: CLLocationManager?
 
     let urlFront = "https://api.weather.gov/points/"
-    let urlBack  = "/forecast"
-    var url = ""
+    let urlBackForecast  = "/forecast"
+    let urlBackStations  = "/stations"
+    var urlForecast = ""
+    var urlStations = ""
     
     var periods:JSON = JSON.null
     
     var favRefreshControl = UIRefreshControl()
+    
+    var latitude = 39.950859769264014
+    var longitude = -105.03283499303978
+    var updatedLocation = false
+    
+    @IBOutlet weak var tableViewHeader: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +38,6 @@ class TableViewController: UITableViewController {
         self.refreshControl = self.favRefreshControl
         self.refreshControl?.addTarget(self, action: #selector(TableViewController.displayWeatherOnTableView), for: .valueChanged)
         displayWeatherOnTableView()
-        
     }
     
     func displayWeatherOnTableView() {
@@ -40,46 +47,50 @@ class TableViewController: UITableViewController {
         
         self.refreshControl?.beginRefreshing()
         
-        var latitude = 39.950859769264014
-        var longitude = -105.03283499303978
-        
         if let latestLat = locManager?.location?.coordinate.latitude {
-            latitude = latestLat
+            self.latitude = latestLat
+        } else {
+            self.updatedLocation = false
         }
-        
         
         if let latestLong = locManager?.location?.coordinate.longitude {
-            longitude = latestLong
+            self.longitude = latestLong
+            self.updatedLocation = true
+        } else {
+            self.updatedLocation = false
         }
         
-        self.url = "\(urlFront)\(latitude),\(longitude)\(urlBack)"
-        
-        print("Url is: \(url)")
-        
-        Alamofire.request(self.url).responseJSON { response in
-            //print(response.request!)  // original URL request
-            //print(response.response!) // HTTP URL response
-            
+        self.urlForecast = "\(urlFront)\(latitude),\(longitude)\(urlBackForecast)"
+        Alamofire.request(self.urlForecast).responseJSON { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                //print(json)
-                print(json["properties"]["periods"])
                 self.periods = json["properties"]["periods"]
-                print("Looping: \(self.periods[0])")
-                for (index,period):(String, JSON) in self.periods {
-                    print(index)
-                    print(period["name"].string!)
-                    print(period["shortForecast"].string!)
-                    print(period["detailedForecast"].string!)
-                    print(period["temperature"].int!)
-                    print("Wind \(period["windDirection"].string!)\(period["windSpeed"].string!)")
-                }
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
             }
             self.refreshControl?.endRefreshing()
+        }
+        self.urlStations = "\(urlFront)\(latitude),\(longitude)\(urlBackStations)"
+        Alamofire.request(self.urlStations).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let station = json["observationStations"][0].string
+                Alamofire.request(station!).responseJSON { response2 in
+                    switch response2.result {
+                    case .success(let value):
+                        let json2 = JSON(value)
+                        let name = json2["properties"]["name"].string
+                        self.tableViewHeader.title = name
+                    case .failure(let error2):
+                        print(error2)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 
@@ -95,23 +106,43 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:TableViewCell = tableView.dequeueReusableCell(withIdentifier: "periodTableCellIdentifier", for: indexPath) as! TableViewCell
 
-        if let name = self.periods[indexPath.row]["name"].string {
+        // TODO The cell we will just have debug data
+        if(indexPath.row == 5) {
+            cell.name.text = ""
+            cell.detailedForecast.text = "Lat/Lon: \(self.latitude),\(self.longitude)"
+            cell.name.text = "Updated GPS: \(self.updatedLocation)"
+            cell.temp.text = ""
+            cell.wind.text = ""
+            return cell
+        }
+        
+        let period = self.periods[indexPath.row]
+        if let name = period["name"].string {
             cell.name.text = name
         }
-        if let detailedForcast = self.periods[indexPath.row]["detailedForecast"].string {
+        if let detailedForcast = period["detailedForecast"].string {
             cell.detailedForecast.text = detailedForcast
         }
-        if let temp = self.periods[indexPath.row]["temperature"].int {
-            cell.temp.text = "\(temp)"
+        if let temp = period["temperature"].int {
+            let tempC = (temp-32)*5/9
+            var high = "Low of";
+            if(period["isDaytime"].bool!) {
+                high = "High of"
+            }
+            cell.temp.text = "\(high) \(temp)°F / \(tempC)°C"
         }
-        if let windDir = self.periods[indexPath.row]["windDirection"].string {
-            cell.wind.text = "Wind \(windDir)\(self.periods[indexPath.row]["windSpeed"].string!)"
+        if let windDir = period["windDirection"].string {
+            var windSpeed = period["windSpeed"].string!
+            if windSpeed.hasPrefix(" ") == false { // Bug from API sometimes a space is added, sometimes not
+                windSpeed = " \(windSpeed)"
+            }
+            cell.wind.text = "Wind \(windDir)\(windSpeed)"
         }
 
         return cell
