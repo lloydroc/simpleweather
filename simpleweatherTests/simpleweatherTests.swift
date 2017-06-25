@@ -15,17 +15,27 @@ import CoreLocation
 
 class simpleweatherTests: XCTestCase {
     
-    let urlForecast = "https://api.weather.gov/points/39.950859769264014,-105.03283499303978/forecast"
-    let urlStation = "https://api.weather.gov/points/39.950859769264014,-105.03283499303978/stations"
+    let baseUrl = "https://api.weather.gov/points"
+    let latLon = "39.9508,-105.0328"
+    var urlForecast = ""
+    var urlStation = ""
+    var urlPoint = ""
     var locManager = CLLocationManager()
     
     override func setUp() {
         super.setUp()
+        urlForecast = "\(self.baseUrl)/\(self.latLon)/forecast"
+        urlStation  = "\(self.baseUrl)/\(self.latLon)/stations"
+        urlPoint    = "\(self.baseUrl)/\(self.latLon)"
+        print(urlForecast)
+        print(urlStation)
+        print(urlPoint)
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        waitForExpectations(timeout: 5) { error in }
     }
     
     func testGpsCoordinates() {
@@ -33,6 +43,10 @@ class simpleweatherTests: XCTestCase {
         let longitude = locManager.location?.coordinate.longitude
         XCTAssertNotNil(latitude)
         XCTAssertNotNil(longitude)
+        let latitudeStr = String(format: "%.4f", latitude!)
+        let longitudeStr = String(format: "%.4f", longitude!)
+        XCTAssertNotNil(latitudeStr.range(of:"."))
+        XCTAssertNotNil(longitudeStr.range(of:"."))
     }
     
     func testGetWeatherForecast() {
@@ -41,7 +55,7 @@ class simpleweatherTests: XCTestCase {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                //print(json)
+                print(json)
                 let periods = json["properties"]["periods"]
                 XCTAssertTrue(periods.count>0)
                 for (_,period):(String,JSON) in periods {
@@ -59,7 +73,7 @@ class simpleweatherTests: XCTestCase {
             expectations.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in }
+        //waitForExpectations(timeout: 5) { error in }
     }
     
     func testGetWeatherStationName() {
@@ -71,7 +85,7 @@ class simpleweatherTests: XCTestCase {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                //print(json)
+                print(json)
                 XCTAssertTrue(json["observationStations"].count>0)
                 let station = json["observationStations"][0].string
                 XCTAssertNotNil(station)
@@ -96,7 +110,8 @@ class simpleweatherTests: XCTestCase {
             }
             expectations.fulfill()
         }
-        waitForExpectations(timeout: 5) { error in }
+        
+        
     }
     
 }

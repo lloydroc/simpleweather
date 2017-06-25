@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Twh-sH-XMV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Twh-sH-XMV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,9 +53,16 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5V-qM-M0t">
+                                            <rect key="frame" x="207" y="182" width="161" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="5ez-FE-9b9" firstAttribute="leading" secondItem="t0t-Ae-DMV" secondAttribute="leading" id="9oH-z4-LHA"/>
+                                        <constraint firstItem="t5V-qM-M0t" firstAttribute="centerY" secondItem="Kay-SN-6WS" secondAttribute="centerY" id="H4c-L3-jAe"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Ulc-S7-O0Y" secondAttribute="trailing" constant="-1" id="WXg-HC-lGR"/>
                                         <constraint firstItem="5ez-FE-9b9" firstAttribute="trailing" secondItem="Qqx-j8-WJr" secondAttribute="trailingMargin" id="WYX-ga-cZZ"/>
                                         <constraint firstItem="Ulc-S7-O0Y" firstAttribute="baseline" secondItem="t0t-Ae-DMV" secondAttribute="baseline" id="YgH-SC-JRC"/>
@@ -64,9 +71,11 @@
                                         <constraint firstItem="Kay-SN-6WS" firstAttribute="top" secondItem="5ez-FE-9b9" secondAttribute="bottom" constant="8" symbolic="YES" id="kKM-H5-3r2"/>
                                         <constraint firstItem="t0t-Ae-DMV" firstAttribute="top" secondItem="Qqx-j8-WJr" secondAttribute="topMargin" constant="-3" id="pa2-2d-ppx"/>
                                         <constraint firstItem="Kay-SN-6WS" firstAttribute="leading" secondItem="5ez-FE-9b9" secondAttribute="leading" id="seo-SB-kVb"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="t5V-qM-M0t" secondAttribute="trailing" constant="-1" id="xb8-OM-PEu"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="currentTemp" destination="t5V-qM-M0t" id="kfq-yP-DoD"/>
                                     <outlet property="detailedForecast" destination="5ez-FE-9b9" id="6AG-Oc-xcS"/>
                                     <outlet property="name" destination="t0t-Ae-DMV" id="ETf-0l-wVo"/>
                                     <outlet property="temp" destination="Ulc-S7-O0Y" id="QdR-e7-w9j"/>

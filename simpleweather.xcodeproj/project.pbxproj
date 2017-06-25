@@ -248,7 +248,7 @@
 				TargetAttributes = {
 					DFFF26BB1E629D5A00A5B2F1 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = ZCYN7HY447;
+						DevelopmentTeam = E4JKFLKLE3;
 						ProvisioningStyle = Automatic;
 					};
 					DFFF26D21E629D5B00A5B2F1 = {
@@ -611,8 +611,9 @@
 			baseConfigurationReference = 4008884B26ECB1FF6A1F092D /* Pods-simpleweather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZCYN7HY447;
+				DEVELOPMENT_TEAM = E4JKFLKLE3;
 				INFOPLIST_FILE = simpleweather/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.closeout.simpleweather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -625,8 +626,9 @@
 			baseConfigurationReference = 772D7A45D8E10703498F7DE1 /* Pods-simpleweather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZCYN7HY447;
+				DEVELOPMENT_TEAM = E4JKFLKLE3;
 				INFOPLIST_FILE = simpleweather/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.closeout.simpleweather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
